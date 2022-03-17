@@ -3,7 +3,7 @@
 namespace Resque\Tests;
 
 use \Resque\Resque;
-use \PHPUnit_Framework_TestCase;
+use \PHPUnit\Framework\TestCase;
 use \Credis_Client;
 
 /**
@@ -13,18 +13,18 @@ use \Credis_Client;
  * @author		Chris Boulton <chris@bigcommerce.com>
  * @license		http://www.opensource.org/licenses/mit-license.php
  */
-class ResqueTestCase extends PHPUnit_Framework_TestCase
+class ResqueTestCase extends TestCase
 {
 	protected $resque;
 	protected $redis;
 	protected $logger;
 
-	public static function setUpBeforeClass()
+	public static function setUpBeforeClass(): void
 	{
 		date_default_timezone_set('UTC');
 	}
 
-	public function setUp()
+	public function setUp(): void
 	{
 		$config = file_get_contents(REDIS_CONF);
 		preg_match('#^\s*port\s+([0-9]+)#m', $config, $matches);
