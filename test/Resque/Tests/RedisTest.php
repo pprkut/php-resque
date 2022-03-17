@@ -15,11 +15,10 @@ use \Resque\Resque;
  */
 class RedisTest extends ResqueTestCase
 {
-	/**
-	 * @expectedException \Resque\Exceptions\RedisException
-	 */
 	public function testRedisExceptionsAreSurfaced()
 	{
+		$this->expectException('\Resque\Exceptions\RedisException');
+
 		$mockCredis = $this->getMockBuilder('Credis_Client')
 			->setMethods(['connect', '__call'])
 			->getMock();
@@ -194,10 +193,11 @@ class RedisTest extends ResqueTestCase
 
 	/**
 	 * @dataProvider bogusDsnStringProvider
-	 * @expectedException InvalidArgumentException
 	 */
 	public function testParsingBogusDsnStringThrowsException($dsn)
 	{
+		$this->expectException('InvalidArgumentException');
+
 		// The next line should throw an InvalidArgumentException
 		$result = Redis::parseDsn($dsn);
 	}
