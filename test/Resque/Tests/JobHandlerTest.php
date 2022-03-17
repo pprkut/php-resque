@@ -40,11 +40,10 @@ class JobHandlerTest extends ResqueTestCase
 		$this->assertTrue((bool)Resque::enqueue('jobs', 'Test_Job'));
 	}
 
-	/**
-	 * @expectedException \Resque\Exceptions\RedisException
-	 */
 	public function testRedisErrorThrowsExceptionOnJobCreation()
 	{
+		$this->expectException('\Resque\Exceptions\RedisException');
+
 		$mockCredis = $this->getMockBuilder('Credis_Client')
 			->setMethods(['connect', '__call'])
 			->getMock();
@@ -69,11 +68,10 @@ class JobHandlerTest extends ResqueTestCase
 		$this->assertEquals('Test_Job', $job->payload['class']);
 	}
 
-	/**
-	 * @expectedException InvalidArgumentException
-	 */
 	public function testObjectArgumentsCannotBePassedToJob()
 	{
+		$this->expectException('InvalidArgumentException');
+
 		$args = new stdClass();
 		$args->test = 'somevalue';
 		Resque::enqueue('jobs', 'Test_Job', $args);
@@ -146,22 +144,20 @@ class JobHandlerTest extends ResqueTestCase
 		$this->assertEquals(1, Stat::get('failed:'.$this->worker));
 	}
 
-	/**
-	 * @expectedException \Resque\Exceptions\ResqueException
-	 */
 	public function testJobWithoutPerformMethodThrowsException()
 	{
+		$this->expectException('\Resque\Exceptions\ResqueException');
+
 		Resque::enqueue('jobs', 'Test_Job_Without_Perform_Method');
 		$job = $this->worker->reserve();
 		$job->worker = $this->worker;
 		$job->perform();
 	}
 
-	/**
-	 * @expectedException Resque\Exceptions\ResqueException
-	 */
 	public function testInvalidJobThrowsException()
 	{
+		$this->expectException('Resque\Exceptions\ResqueException');
+
 		Resque::enqueue('jobs', 'Invalid_Job');
 		$job = $this->worker->reserve();
 		$job->worker = $this->worker;
@@ -363,7 +359,7 @@ class JobHandlerTest extends ResqueTestCase
 		$this->assertEquals($removedItems, 2);
 		$this->assertEquals(Resque::size($queue), 1);
 		$item = Resque::pop($queue);
-		$this->assertInternalType('array', $item['args']);
+		$this->assertIsArray($item['args']);
 		$this->assertEquals(10, $item['args'][0]['bar'], 'Wrong items were dequeued from queue!');
 	}
 
