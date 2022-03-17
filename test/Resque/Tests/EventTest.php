@@ -21,7 +21,7 @@ class EventTest extends ResqueTestCase
 {
 	private $callbacksHit = array();
 
-	public function setUp()
+	public function setUp(): void
 	{
 		Test_Job::$called = false;
 
@@ -34,7 +34,7 @@ class EventTest extends ResqueTestCase
 		$this->worker->registerWorker();
 	}
 
-	public function tearDown()
+	public function tearDown(): void
 	{
 		Event::clearListeners();
 		$this->callbacksHit = array();
@@ -171,7 +171,7 @@ class EventTest extends ResqueTestCase
 		throw new DoNotPerformException;
 	}
 
-	public function beforeEnqueueEventDontCreateCallback($queue, $class, $args, $track = false)
+	public function beforeEnqueueEventDontCreateCallback($queue, $class, $args, $id, $track = false)
 	{
 		$this->callbacksHit[] = __FUNCTION__;
 		throw new DoNotCreateException;
@@ -187,7 +187,7 @@ class EventTest extends ResqueTestCase
 		$this->assertEquals($args[0], 'somevar');
 	}
 
-	public function afterEnqueueEventCallback($class, $args)
+	public function afterEnqueueEventCallback($class, $args, $queue, $id)
 	{
 		$this->callbacksHit[] = __FUNCTION__;
 		$this->assertEquals('Test_Job', $class);
@@ -196,7 +196,7 @@ class EventTest extends ResqueTestCase
 		), $args);
 	}
 
-	public function beforeEnqueueEventCallback($job)
+	public function beforeEnqueueEventCallback($class, $args, $queue, $id)
 	{
 		$this->callbacksHit[] = __FUNCTION__;
 	}
