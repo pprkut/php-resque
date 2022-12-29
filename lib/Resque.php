@@ -407,6 +407,10 @@ class Resque
 	 */
 	public static function generateJobId()
 	{
-		return md5(uniqid('', true));
+		if (extension_loaded('uuid')) {
+			return str_replace('-', '', uuid_create());
+		} else {
+			return md5(uniqid('', true));
+		}
 	}
 }
