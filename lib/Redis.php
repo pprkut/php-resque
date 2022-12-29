@@ -26,17 +26,17 @@ class Redis
 	/**
 	 * A default host to connect to
 	 */
-	const DEFAULT_HOST = 'localhost';
+	protected const DEFAULT_HOST = 'localhost';
 
 	/**
 	 * The default Redis port
 	 */
-	const DEFAULT_PORT = 6379;
+	protected const DEFAULT_PORT = 6379;
 
 	/**
 	 * The default Redis Database number
 	 */
-	const DEFAULT_DATABASE = 0;
+	protected const DEFAULT_DATABASE = 0;
 
 	/**
 	 * Connection driver

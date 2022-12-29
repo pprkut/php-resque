@@ -42,14 +42,14 @@ class RedisTest extends ResqueTestCase
 			// Input , Expected output
 			array('', array(
 				'localhost',
-				Redis::DEFAULT_PORT,
+				6379,
 				false,
 				false, false,
 				array(),
 			)),
 			array('localhost', array(
 				'localhost',
-				Redis::DEFAULT_PORT,
+				6379,
 				false,
 				false, false,
 				array(),
@@ -70,14 +70,14 @@ class RedisTest extends ResqueTestCase
 			)),
 			array('redis://foobar', array(
 				'foobar',
-				Redis::DEFAULT_PORT,
+				6379,
 				false,
 				false, false,
 				array(),
 			)),
 			array('redis://foobar/', array(
 				'foobar',
-				Redis::DEFAULT_PORT,
+				6379,
 				false,
 				false, false,
 				array(),
