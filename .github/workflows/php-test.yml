@@ -15,6 +15,8 @@ jobs:
             experimental: true
           - php-versions: '8.1'
             experimental: true
+          - php-versions: '8.2'
+            experimental: true
     steps:
       - name: Checkout
         uses: actions/checkout@v2
