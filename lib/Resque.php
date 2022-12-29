@@ -14,9 +14,9 @@ use Resque\Exceptions\DoNotCreateException;
  */
 class Resque
 {
-	const VERSION = '1.2';
+	public const VERSION = '1.2';
 
-	const DEFAULT_INTERVAL = 5;
+	public const DEFAULT_INTERVAL = 5;
 
 	/**
 	 * @var Redis Instance of Resque\Redis that talks to redis.
