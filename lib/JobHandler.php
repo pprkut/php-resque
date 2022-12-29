@@ -188,6 +188,7 @@ class JobHandler
 
 		$this->instance = $this->getJobFactory()->create($this->payload['class'], $this->getArguments(), $this->queue);
 		$this->instance->job = $this;
+		$this->instance->resque_job_id = $this->payload['id'];
 		return $this->instance;
 	}
 
