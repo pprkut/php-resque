@@ -13,10 +13,10 @@ use Resque\Resque;
  */
 class Status
 {
-	const STATUS_WAITING = 1;
-	const STATUS_RUNNING = 2;
-	const STATUS_FAILED = 3;
-	const STATUS_COMPLETE = 4;
+	public const STATUS_WAITING = 1;
+	public const STATUS_RUNNING = 2;
+	public const STATUS_FAILED = 3;
+	public const STATUS_COMPLETE = 4;
 
 	/**
 	 * @var string The prefix of the job status id.

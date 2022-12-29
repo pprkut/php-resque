@@ -17,9 +17,9 @@ use Resque\Event;
  */
 class SchedulerWorker
 {
-	const LOG_NONE = 0;
-	const LOG_NORMAL = 1;
-	const LOG_VERBOSE = 2;
+	public const LOG_NONE = 0;
+	public const LOG_NORMAL = 1;
+	public const LOG_VERBOSE = 2;
 
 	/**
 	 * @var int Current log level of this worker.
