@@ -34,6 +34,21 @@ class JobHandler
 	public $payload;
 
 	/**
+	 * @var int Timestamp of when the data was popped from redis.
+	 */
+	public $pop_time;
+
+	/**
+	 * @var int Timestamp of when the job started processing.
+	 */
+	public $start_time;
+
+	/**
+	 * @var int Timestamp of when the job finished processing.
+	 */
+	public $end_time;
+
+	/**
 	 * @var object|\Resque\Job\JobInterface Instance of the class performing work for this job.
 	 */
 	private $instance;
@@ -53,6 +68,7 @@ class JobHandler
 	{
 		$this->queue = $queue;
 		$this->payload = $payload;
+		$this->pop_time = microtime(true);
 	}
 
 	/**
@@ -206,6 +222,8 @@ class JobHandler
 		try {
 			Event::trigger('beforePerform', $this);
 
+			$this->start_time = microtime(true);
+
 			$instance = $this->getInstance();
 			if (is_callable([$instance, 'setUp'])) {
 				$instance->setUp();
@@ -216,6 +234,8 @@ class JobHandler
 			if (is_callable([$instance, 'tearDown'])) {
 				$instance->tearDown();
 			}
+
+			$this->end_time = microtime(true);
 
 			Event::trigger('afterPerform', $this);
 		} catch (DoNotPerformException $e) {
