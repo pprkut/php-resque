@@ -452,6 +452,57 @@ class JobHandlerTest extends ResqueTestCase
 		$this->assertEquals('Resque\Tests\Some_Job_Class', $newJob->payload['class']);
 		$this->assertNotNull($newJob->payload['id']);
 	}
+
+	public function testJobHandlerSetsPopTime()
+	{
+		$payload = array(
+			'class' => 'Resque\Tests\Some_Job_Class',
+			'args' => null
+		);
+
+		$now = microtime(true);
+
+		$job = new JobHandler('jobs', $payload);
+		$instance = $job->getInstance();
+
+		$this->assertIsFloat($job->popTime);
+		$this->assertTrue($job->popTime >= $now);
+	}
+
+	public function testJobHandlerSetsStartAndEndTimeForSuccessfulJob()
+	{
+		$payload = array(
+			'class' => 'Resque\Tests\Some_Job_Class',
+			'args' => null
+		);
+
+		$job = new JobHandler('jobs', $payload);
+		$job->perform();
+
+		$this->assertIsFloat($job->startTime);
+		$this->assertTrue($job->startTime >= $job->popTime);
+
+		$this->assertIsFloat($job->endTime);
+		$this->assertTrue($job->endTime >= $job->startTime);
+	}
+
+	public function testJobHandlerSetsStartAndEndTimeForFailedJob()
+	{
+		$payload = array(
+			'class' => 'Failing_Job',
+			'args' => null
+		);
+		$job = new JobHandler('jobs', $payload);
+		$job->worker = $this->worker;
+
+		$this->worker->perform($job);
+
+		$this->assertIsFloat($job->startTime);
+		$this->assertTrue($job->startTime >= $job->popTime);
+
+		$this->assertIsFloat($job->endTime);
+		$this->assertTrue($job->endTime >= $job->startTime);
+	}
 }
 
 class Some_Job_Class implements JobInterface
