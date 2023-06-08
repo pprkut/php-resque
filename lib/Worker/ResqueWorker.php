@@ -11,6 +11,7 @@ use Psr\Log\LogLevel;
 use Resque\Job\PID;
 use Resque\Event;
 use Resque\Exceptions\DirtyExitException;
+use Resque\Exceptions\RedisException;
 use Resque\Job\Status;
 use Resque\JobHandler;
 use Resque\Stat;
@@ -200,6 +201,11 @@ class ResqueWorker
 					throw new CredisException('redis ping() failed');
 				}
 			} catch (CredisException $e) {
+				$this->logger->log(LogLevel::ERROR, 'redis went away. trying to reconnect');
+				Resque::$redis = null;
+				usleep($interval * 1000000);
+				continue;
+			} catch (RedisException $e) {
 				$this->logger->log(LogLevel::ERROR, 'redis went away. trying to reconnect');
 				Resque::$redis = null;
 				usleep($interval * 1000000);
