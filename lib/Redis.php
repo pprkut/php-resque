@@ -14,6 +14,32 @@ use InvalidArgumentException;
  * @package		Resque/Redis
  * @author		Chris Boulton <chris@bigcommerce.com>
  * @license		http://www.opensource.org/licenses/mit-license.php
+ *
+ * @method array|null    blpop(string $keyN, int $timeout)
+ * @method int           decrby(string $key, int $decrement)
+ * @method int           del(string|array ...$keys)
+ * @method int           exists(string $key)
+ * @method int           expire(string $key, int $seconds)
+ * @method false|string  get(string $key)
+ * @method int           incrby(string $key, int $decrement)
+ * @method array         keys(string $key)
+ * @method int           llen(string $key)
+ * @method string|null   lpop(string $key)
+ * @method array         lrange(string $key, int $start, int $stop)
+ * @method int           lrem(string $key, int $count, mixed $value)
+ * @method string        ping(string|null $name = null)
+ * @method string|null   rpop(string $key)
+ * @method string|null   rpoplpush(string $source, string $destination)
+ * @method int           rpush(string $key, mixed $value, mixed $valueN = null)
+ * @method int           sadd(string $key, mixed $value, string $valueN = null)
+ * @method bool          set(string $key, string $value, int | array $options = null)
+ * @method int           sismember(string $key, string $member)
+ * @method array         smembers(string $key)
+ * @method int           srem(string $key, mixed $value, string $valueN = null)
+ * @method int           zadd(string $key, double $score, string $value)
+ * @method int           zcard(string $key)
+ * @method array         zrangebyscore(string $key, mixed $start, mixed $stop, array $args = null)
+ * @method int           zrem(string $key, string $member)
  */
 class Redis
 {
