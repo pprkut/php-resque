@@ -7,6 +7,7 @@ use Resque\Job\Status;
 use Resque\Exceptions\DoNotPerformException;
 use Resque\Job\FactoryInterface;
 use Resque\Job\Factory;
+use Resque\Job\Job;
 use Error;
 
 /**
@@ -49,7 +50,7 @@ class JobHandler
 	public $end_time;
 
 	/**
-	 * @var object|\Resque\Job\JobInterface Instance of the class performing work for this job.
+	 * @var Job Instance of the class performing work for this job.
 	 */
 	private $instance;
 
@@ -193,10 +194,10 @@ class JobHandler
 
 	/**
 	 * Get the instantiated object for this job that will be performing work.
-	 * @return \Resque\Job\JobInterface Instance of the object that this job belongs to.
+	 * @return \Resque\Job\Job Instance of the object that this job belongs to.
 	 * @throws \Resque\Exceptions\ResqueException
 	 */
-	public function getInstance()
+	public function getInstance(): Job
 	{
 		if (!is_null($this->instance)) {
 			return $this->instance;
@@ -336,7 +337,7 @@ class JobHandler
 	/**
 	 * @return Resque\Job\FactoryInterface
 	 */
-	public function getJobFactory()
+	public function getJobFactory(): FactoryInterface
 	{
 		if ($this->jobFactory === null) {
 			$this->jobFactory = new Factory();

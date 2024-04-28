@@ -85,7 +85,7 @@ if(function_exists('pcntl_signal')) {
 	pcntl_signal(SIGTERM, 'sigint');
 }
 
-class Test_Job
+class Test_Job extends \Resque\Job\Job
 {
 	public static $called = false;
 
@@ -100,7 +100,7 @@ class Failing_Job_Exception extends \Exception
 
 }
 
-class Failing_Job
+class Failing_Job extends \Resque\Job\Job
 {
 	public function perform()
 	{
@@ -114,7 +114,7 @@ class Failing_Job
  *
  * CAUTION Use this test job only with Worker::work, i.e. only when you actually trigger the fork in tests.
  */
-class InProgress_Job
+class InProgress_Job extends \Resque\Job\Job
 {
 	public function perform()
 	{
@@ -126,12 +126,7 @@ class InProgress_Job
 	}
 }
 
-class Test_Job_Without_Perform_Method
-{
-
-}
-
-class Test_Job_With_SetUp
+class Test_Job_With_SetUp extends \Resque\Job\Job
 {
 	public static $called = false;
 	public $args = false;
@@ -148,7 +143,7 @@ class Test_Job_With_SetUp
 }
 
 
-class Test_Job_With_TearDown
+class Test_Job_With_TearDown extends \Resque\Job\Job
 {
 	public static $called = false;
 	public $args = false;
@@ -164,7 +159,7 @@ class Test_Job_With_TearDown
 	}
 }
 
-class Test_Infinite_Recursion_Job
+class Test_Infinite_Recursion_Job extends \Resque\Job\Job
 {
     public function perform()
     {

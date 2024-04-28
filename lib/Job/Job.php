@@ -11,7 +11,7 @@ use Resque\JobHandler;
  * @author		Heinz Wiesinger <pprkut@liwjatan.org>
  * @license		http://www.opensource.org/licenses/mit-license.php
  */
-class Job
+abstract class Job
 {
 	/**
 	 * Job arguments
@@ -36,4 +36,9 @@ class Job
 	 * @var string
 	 */
 	public $resque_job_id;
+
+	/**
+	 * @return bool
+	 */
+	abstract public function perform();
 }
