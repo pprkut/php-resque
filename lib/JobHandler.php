@@ -25,7 +25,7 @@ class JobHandler
 	public $queue;
 
 	/**
-	 * @var \Resque\Worker\Resque Instance of the Resque worker running this job.
+	 * @var \Resque\Worker\ResqueWorker Instance of the Resque worker running this job.
 	 */
 	public $worker;
 
@@ -150,7 +150,8 @@ class JobHandler
 	/**
 	 * Update the status of the current job.
 	 *
-	 * @param int $status Status constant from Resque\Job\Status indicating the current status of a job.
+	 * @param int       $status Status constant from Resque\Job\Status indicating the current status of a job.
+	 * @param bool|null $result Result from the job's perform() method
 	 */
 	public function updateStatus($status, $result = null)
 	{
@@ -214,8 +215,8 @@ class JobHandler
 	 * associated with the job with the supplied arguments.
 	 *
 	 * @return bool
-	 * @throws Resque\Exceptions\ResqueException When the job's class could not be found
-	 * 											 or it does not contain a perform method.
+	 * @throws \Resque\Exceptions\ResqueException When the job's class could not be found
+	 * 											  or it does not contain a perform method.
 	 */
 	public function perform()
 	{
@@ -324,8 +325,8 @@ class JobHandler
 	}
 
 	/**
-	 * @param Resque\Job\FactoryInterface $jobFactory
-	 * @return Resque\JobHandler
+	 * @param \Resque\Job\FactoryInterface $jobFactory
+	 * @return \Resque\JobHandler
 	 */
 	public function setJobFactory(FactoryInterface $jobFactory)
 	{
@@ -335,7 +336,7 @@ class JobHandler
 	}
 
 	/**
-	 * @return Resque\Job\FactoryInterface
+	 * @return \Resque\Job\FactoryInterface
 	 */
 	public function getJobFactory(): FactoryInterface
 	{

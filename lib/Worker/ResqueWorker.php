@@ -32,7 +32,7 @@ class ResqueWorker
 	/**
 	 * @var string Prefix for the process name
 	 */
-	private static $processPrefix = 'resque';
+	protected static $processPrefix = 'resque';
 
 	/**
 	* @var \Psr\Log\LoggerInterface Logging object that impliments the PSR-3 LoggerInterface
@@ -344,7 +344,7 @@ class ResqueWorker
 	/**
 	 * @param  bool            $blocking
 	 * @param  int             $timeout
-	 * @return object|boolean               Instance of Resque\JobHandler if a job is found, false if not.
+	 * @return JobHandler|boolean Instance of Resque\JobHandler if a job is found, false if not.
 	 */
 	public function reserve($blocking = false, $timeout = null)
 	{
@@ -611,7 +611,7 @@ class ResqueWorker
 	/**
 	 * Tell Redis which job we're currently working on.
 	 *
-	 * @param object $job \Resque\JobHandler instance containing the job we're working on.
+	 * @param JobHandler $job \Resque\JobHandler instance containing the job we're working on.
 	 */
 	public function workingOn(JobHandler $job)
 	{
