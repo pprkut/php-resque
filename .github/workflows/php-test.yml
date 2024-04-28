@@ -88,5 +88,5 @@ jobs:
         run: composer install
 
       - name: Run PHPStan
-        run: phpstan analyse lib -l1
+        run: phpstan analyse lib -l2
 
