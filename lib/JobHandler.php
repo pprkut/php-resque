@@ -70,6 +70,10 @@ class JobHandler
 		$this->queue = $queue;
 		$this->payload = $payload;
 		$this->pop_time = microtime(true);
+
+		if (!isset($this->payload['id'])) {
+			$this->payload['id'] = Resque::generateJobId();
+		}
 	}
 
 	/**

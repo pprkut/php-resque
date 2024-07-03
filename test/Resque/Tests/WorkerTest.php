@@ -179,7 +179,8 @@ class WorkerTest extends ResqueTestCase
 		$worker->registerWorker();
 
 		$payload = array(
-			'class' => 'Test_Job'
+			'class' => 'Test_Job',
+			'id'    => '87993253a68c47e697fc03a515154339'
 		);
 		$job = new JobHandler('jobs', $payload);
 		$worker->workingOn($job);
