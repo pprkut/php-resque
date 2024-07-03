@@ -7,6 +7,7 @@ use Resque\Exceptions\DoNotPerformException;
 use Resque\Job\FactoryInterface;
 use Resque\Job\Factory;
 use Resque\Job\Job;
+use Resque\Worker\ResqueWorker;
 use Error;
 
 /**
@@ -21,42 +22,42 @@ class JobHandler
 	/**
 	 * @var string The name of the queue that this job belongs to.
 	 */
-	public $queue;
+	public string $queue;
 
 	/**
 	 * @var \Resque\Worker\ResqueWorker Instance of the Resque worker running this job.
 	 */
-	public $worker;
+	public ResqueWorker $worker;
 
 	/**
 	 * @var array Array containing details of the job.
 	 */
-	public $payload;
+	public array $payload;
 
 	/**
-	 * @var int Timestamp of when the data was popped from redis.
+	 * @var float Timestamp of when the data was popped from redis.
 	 */
-	public $pop_time;
+	public float $pop_time;
 
 	/**
-	 * @var int Timestamp of when the job started processing.
+	 * @var float Timestamp of when the job started processing.
 	 */
-	public $start_time;
+	public float $start_time;
 
 	/**
-	 * @var int Timestamp of when the job finished processing.
+	 * @var float Timestamp of when the job finished processing.
 	 */
-	public $end_time;
+	public float $end_time;
 
 	/**
 	 * @var Job Instance of the class performing work for this job.
 	 */
-	private $instance;
+	private Job $instance;
 
 	/**
 	 * @var \Resque\Job\FactoryInterface
 	 */
-	private $jobFactory;
+	private FactoryInterface $jobFactory;
 
 	/**
 	 * Instantiate a new instance of a job.
@@ -193,7 +194,7 @@ class JobHandler
 	 */
 	public function getInstance(): Job
 	{
-		if (!is_null($this->instance)) {
+		if (isset($this->instance)) {
 			return $this->instance;
 		}
 
@@ -333,7 +334,7 @@ class JobHandler
 	 */
 	public function getJobFactory(): FactoryInterface
 	{
-		if ($this->jobFactory === null) {
+		if (!isset($this->jobFactory)) {
 			$this->jobFactory = new Factory();
 		}
 		return $this->jobFactory;
