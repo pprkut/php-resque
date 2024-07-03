@@ -249,6 +249,8 @@ class JobHandler
 	 */
 	public function fail($exception)
 	{
+		$this->end_time = microtime(true);
+
 		Event::trigger('onFailure', array(
 			'exception' => $exception,
 			'job' => $this,
