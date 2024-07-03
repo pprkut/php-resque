@@ -129,7 +129,7 @@ class InProgress_Job extends \Resque\Job\Job
 class Test_Job_With_SetUp extends \Resque\Job\Job
 {
 	public static $called = false;
-	public $args = false;
+	public array $args = [];
 
 	public function setUp()
 	{
@@ -146,7 +146,7 @@ class Test_Job_With_SetUp extends \Resque\Job\Job
 class Test_Job_With_TearDown extends \Resque\Job\Job
 {
 	public static $called = false;
-	public $args = false;
+	public array $args = [];
 
 	public function perform()
 	{

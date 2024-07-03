@@ -17,25 +17,25 @@ abstract class Job
 	 * Job arguments
 	 * @var array
 	 */
-	public $args;
+	public array $args;
 
 	/**
 	 * Associated JobHandler instance
 	 * @var JobHandler
 	 */
-	public $job;
+	public JobHandler $job;
 
 	/**
 	 * Name of the queue the job was in
 	 * @var string
 	 */
-	public $queue;
+	public string $queue;
 
 	/**
 	 * Unique job ID
 	 * @var string
 	 */
-	public $resque_job_id;
+	public string $resque_job_id;
 
 	/**
 	 * @return bool

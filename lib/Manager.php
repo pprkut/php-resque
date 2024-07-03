@@ -52,7 +52,7 @@ class Manager
 	 *
 	 * @return string|boolean Job ID when the job was created, false if creation was cancelled due to beforeEnqueue
 	 */
-	public function enqueue($queue, $class, $args = null, $trackStatus = false, $prefix = "")
+	public function enqueue($queue, $class, array $args = [], $trackStatus = false, $prefix = "")
 	{
 		return Resque::enqueue($queue, $class, $args, $trackStatus, $prefix);
 	}
