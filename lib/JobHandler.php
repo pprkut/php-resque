@@ -229,7 +229,7 @@ class JobHandler
 				$instance->setUp();
 			}
 
-			$result = $instance->perform();
+			$instance->perform();
 
 			if (is_callable([$instance, 'tearDown'])) {
 				$instance->tearDown();
