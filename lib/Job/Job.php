@@ -38,7 +38,7 @@ abstract class Job
 	public string $resque_job_id;
 
 	/**
-	 * @return bool
+	 * @return void
 	 */
 	abstract public function perform();
 }
