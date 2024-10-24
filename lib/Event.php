@@ -12,7 +12,7 @@ namespace Resque;
 class Event
 {
 	/**
-	 * @var array Array containing all registered callbacks, indexked by event name.
+	 * @var array<string, callable[]> Array containing all registered callbacks, indexed by event name.
 	 */
 	private static $events = array();
 
@@ -47,7 +47,7 @@ class Event
 	 * Listen in on a given event to have a specified callback fired.
 	 *
 	 * @param string $event Name of event to listen on.
-	 * @param mixed $callback Any callback callable by call_user_func_array.
+	 * @param callable $callback Any callback callable by call_user_func_array.
 	 * @return true
 	 */
 	public static function listen($event, $callback)
@@ -64,7 +64,7 @@ class Event
 	 * Stop a given callback from listening on a specific event.
 	 *
 	 * @param string $event Name of event.
-	 * @param mixed $callback The callback as defined when listen() was called.
+	 * @param callable $callback The callback as defined when listen() was called.
 	 * @return true
 	 */
 	public static function stopListening($event, $callback)

@@ -13,6 +13,8 @@ use DateTime;
 * @author		Chris Boulton <chris@bigcommerce.com>
 * @copyright	(c) 2012 Chris Boulton
 * @license		http://www.opensource.org/licenses/mit-license.php
+*
+* @phpstan-type Args array<string, scalar|array>
 */
 class Scheduler
 {
@@ -26,8 +28,8 @@ class Scheduler
 	 *
 	 * @param int $in Number of seconds from now when the job should be executed.
 	 * @param string $queue The name of the queue to place the job in.
-	 * @param string $class The name of the class that contains the code to execute the job.
-	 * @param array $args Any optional arguments that should be passed when the job is executed.
+	 * @param class-string $class The name of the class that contains the code to execute the job.
+	 * @param Args $args Any optional arguments that should be passed when the job is executed.
 	 */
 	public static function enqueueIn($in, $queue, $class, array $args = array())
 	{
@@ -43,8 +45,8 @@ class Scheduler
 	 *
 	 * @param \DateTime|int $at Instance of PHP DateTime object or int of UNIX timestamp.
 	 * @param string $queue The name of the queue to place the job in.
-	 * @param string $class The name of the class that contains the code to execute the job.
-	 * @param array $args Any optional arguments that should be passed when the job is executed.
+	 * @param class-string $class The name of the class that contains the code to execute the job.
+	 * @param Args $args Any optional arguments that should be passed when the job is executed.
 	 */
 	public static function enqueueAt($at, $queue, $class, $args = array())
 	{
@@ -108,9 +110,9 @@ class Scheduler
 	 * also, this is an expensive operation because all delayed keys have tobe
 	 * searched
 	 *
-	 * @param $queue
-	 * @param $class
-	 * @param $args
+	 * @param string $queue
+	 * @param class-string $class
+	 * @param Args $args
 	 * @return int number of jobs that were removed
 	 */
 	public static function removeDelayed($queue, $class, $args)
@@ -134,10 +136,10 @@ class Scheduler
 	 * queue, class and arguments that you used when you added
 	 * to the delayed queue
 	 *
-	 * @param $timestamp
-	 * @param $queue
-	 * @param $class
-	 * @param $args
+	 * @param \DateTime|int $timestamp
+	 * @param string $queue
+	 * @param class-string $class
+	 * @param Args $args
 	 * @return mixed
 	 */
 	public static function removeDelayedJobFromTimestamp($timestamp, $queue, $class, $args)
@@ -155,8 +157,8 @@ class Scheduler
 	 * Generate hash of all job properties to be saved in the scheduled queue.
 	 *
 	 * @param string $queue Name of the queue the job will be placed on.
-	 * @param string $class Name of the job class.
-	 * @param array $args Array of job arguments.
+	 * @param class-string $class Name of the job class.
+	 * @param Args $args Array of job arguments.
 	 */
 
 	private static function jobToHash($queue, $class, $args)
@@ -258,7 +260,7 @@ class Scheduler
 	/**
 	 * Ensure that supplied job class/queue is valid.
 	 *
-	 * @param string $class Name of job class.
+	 * @param class-string $class Name of job class.
 	 * @param string $queue Name of queue.
 	 * @throws \Resque\Exceptions\ResqueException
 	 */
