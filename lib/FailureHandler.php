@@ -16,7 +16,7 @@ use Error;
 class FailureHandler
 {
 	/**
-	 * @var string Class name representing the backend to pass failed jobs off to.
+	 * @var class-string Class name representing the backend to pass failed jobs off to.
 	 */
 	private static $backend;
 
@@ -69,7 +69,7 @@ class FailureHandler
 	 * should be the name of a class to be instantiated when a job fails.
 	 * It is your responsibility to have the backend class loaded (or autoloaded)
 	 *
-	 * @param string $backend The class name of the backend to pipe failures to.
+	 * @param class-string $backend The class name of the backend to pipe failures to.
 	 */
 	public static function setBackend($backend)
 	{

@@ -16,6 +16,8 @@ use Error;
  * @package		Resque/JobHandler
  * @author		Chris Boulton <chris@bigcommerce.com>
  * @license		http://www.opensource.org/licenses/mit-license.php
+ * 
+ * @phpstan-import-type Args from Scheduler
  */
 class JobHandler
 {
@@ -30,7 +32,7 @@ class JobHandler
 	public ResqueWorker $worker;
 
 	/**
-	 * @var array Array containing details of the job.
+	 * @var array<string, mixed> Array containing details of the job.
 	 */
 	public array $payload;
 
@@ -63,7 +65,7 @@ class JobHandler
 	 * Instantiate a new instance of a job.
 	 *
 	 * @param string $queue The queue that the job belongs to.
-	 * @param array $payload array containing details of the job.
+	 * @param array<string, mixed> $payload array containing details of the job.
 	 */
 	public function __construct($queue, $payload)
 	{
@@ -80,13 +82,13 @@ class JobHandler
 	 * Create a new job and save it to the specified queue.
 	 *
 	 * @param string $queue The name of the queue to place the job in.
-	 * @param string $class The name of the class that contains the code to execute the job.
-	 * @param array $args Any optional arguments that should be passed when the job is executed.
+	 * @param class-string $class The name of the class that contains the code to execute the job.
+	 * @param Args $args Any optional arguments that should be passed when the job is executed.
 	 * @param boolean $monitor Set to true to be able to monitor the status of a job.
 	 * @param string $id Unique identifier for tracking the job. Generated if not supplied.
 	 * @param string $prefix The prefix needs to be set for the status key
 	 *
-	 * @return string
+	 * @return string Job ID
 	 */
 	public static function create($queue, $class, array $args = [], $monitor = false, $id = null, $prefix = "")
 	{
@@ -114,7 +116,7 @@ class JobHandler
 	 * instance of JobHandler for it.
 	 *
 	 * @param string $queue The name of the queue to check for a job in.
-	 * @return false|object Null when there aren't any waiting jobs, instance of Resque\JobHandler when a job was found.
+	 * @return false|JobHandler False when there aren't any waiting jobs, instance of Resque\JobHandler when a job was found.
 	 */
 	public static function reserve($queue)
 	{
@@ -132,7 +134,7 @@ class JobHandler
 	 *
 	 * @param array             $queues
 	 * @param int               $timeout
-	 * @return false|object Null when there aren't any waiting jobs, instance of Resque\JobHandler when a job was found.
+	 * @return false|JobHandler False when there aren't any waiting jobs, instance of Resque\JobHandler when a job was found.
 	 */
 	public static function reserveBlocking(array $queues, $timeout = null)
 	{
@@ -180,7 +182,7 @@ class JobHandler
 	/**
 	 * Get the arguments supplied to this job.
 	 *
-	 * @return array Array of arguments.
+	 * @return Args Array of arguments.
 	 */
 	public function getArguments(): array
 	{
@@ -249,7 +251,7 @@ class JobHandler
 	/**
 	 * Mark the current job as having failed.
 	 *
-	 * @param $exception
+	 * @param \Throwable $exception
 	 */
 	public function fail($exception)
 	{
@@ -282,7 +284,7 @@ class JobHandler
 
 	/**
 	 * Re-queue the current job.
-	 * @return string
+	 * @return string new Job ID
 	 */
 	public function recreate()
 	{

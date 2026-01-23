@@ -8,6 +8,8 @@ namespace Resque;
  * @package		Resque
  * @author		Heinz Wiesinger <pprkut@liwjatan.org>
  * @license		http://www.opensource.org/licenses/mit-license.php
+ * 
+ * @phpstan-import-type Args from Scheduler
  */
 class Manager
 {
@@ -45,8 +47,8 @@ class Manager
 	 * Create a new job and save it to the specified queue.
 	 *
 	 * @param string $queue The name of the queue to place the job in.
-	 * @param string $class The name of the class that contains the code to execute the job.
-	 * @param array $args Any optional arguments that should be passed when the job is executed.
+	 * @param class-string $class The name of the class that contains the code to execute the job.
+	 * @param Args $args Any optional arguments that should be passed when the job is executed.
 	 * @param boolean $trackStatus Set to true to be able to monitor the status of a job.
 	 * @param string $prefix The prefix needs to be set for the status key
 	 *
@@ -131,8 +133,8 @@ class Manager
 	 *
 	 * @param int $in Number of seconds from now when the job should be executed.
 	 * @param string $queue The name of the queue to place the job in.
-	 * @param string $class The name of the class that contains the code to execute the job.
-	 * @param array $args Any optional arguments that should be passed when the job is executed.
+	 * @param class-string $class The name of the class that contains the code to execute the job.
+	 * @param Args $args Any optional arguments that should be passed when the job is executed.
 	 */
 	public function enqueueIn($in, $queue, $class, array $args = array())
 	{
@@ -148,8 +150,8 @@ class Manager
 	 *
 	 * @param \DateTime|int $at Instance of PHP DateTime object or int of UNIX timestamp.
 	 * @param string $queue The name of the queue to place the job in.
-	 * @param string $class The name of the class that contains the code to execute the job.
-	 * @param array $args Any optional arguments that should be passed when the job is executed.
+	 * @param class-string $class The name of the class that contains the code to execute the job.
+	 * @param Args $args Any optional arguments that should be passed when the job is executed.
 	 */
 	public function enqueueAt($at, $queue, $class, $args = array())
 	{
@@ -187,9 +189,9 @@ class Manager
 	 * also, this is an expensive operation because all delayed keys have tobe
 	 * searched
 	 *
-	 * @param $queue
-	 * @param $class
-	 * @param $args
+	 * @param string $queue
+	 * @param class-string $class
+	 * @param Args $args
 	 * @return int number of jobs that were removed
 	 */
 	public function removeDelayed($queue, $class, $args)
@@ -204,10 +206,10 @@ class Manager
 	 * queue, class and arguments that you used when you added
 	 * to the delayed queue
 	 *
-	 * @param $timestamp
-	 * @param $queue
-	 * @param $class
-	 * @param $args
+	 * @param \DateTime|int $timestamp
+	 * @param string $queue
+	 * @param class-string $class
+	 * @param Args $args
 	 * @return mixed
 	 */
 	public function removeDelayedJobFromTimestamp($timestamp, $queue, $class, $args)

@@ -71,7 +71,7 @@ class Redis
 	private $driver;
 
 	/**
-	 * @var array List of all commands in Redis that supply a key as their
+	 * @var string[] List of all commands in Redis that supply a key as their
 	 *	first argument. Used to prefix keys with the Resque namespace.
 	 */
 	private $keyCommands = array(
@@ -146,7 +146,7 @@ class Redis
 	}
 
 	/**
-	 * @param string|array $server A DSN or array
+	 * @param string|string[] $server A DSN or array
 	 * @param int $database A database number to select. However, if we find a valid database number in the DSN the
 	 *                      DSN-supplied value will be used instead and this parameter is ignored.
 	 * @param object $client Optional Credis_Cluster or Credis_Client instance instantiated by you
@@ -201,7 +201,7 @@ class Redis
 	 * Note: the 'user' part of the DSN is not used.
 	 *
 	 * @param string $dsn A DSN string
-	 * @return array An array of DSN compotnents, with 'false' values for any unknown components. e.g.
+	 * @return string[] An array of DSN compotnents, with 'false' values for any unknown components. e.g.
 	 *               [host, port, db, user, pass, options]
 	 */
 	public static function parseDsn($dsn)
